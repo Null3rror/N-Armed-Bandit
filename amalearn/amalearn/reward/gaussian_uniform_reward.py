@@ -12,10 +12,10 @@ class GaussianUnifromReward(RewardBase):
         self.p2 = p2
 
         self.distbs = [
-            lambda n: np.random.normal(loc=self.mean, scale=self.std),
-            lambda n: np.random.uniform(self.low, self.high)
+            lambda : np.random.normal(loc=self.mean, scale=self.std),
+            lambda : np.random.uniform(self.low, self.high)
         ]
 
     def get_reward(self):
         distbIndex = np.random.choice(len(self.distbs), p=[self.p1, self.p2])
-        return self.distbs[distbIndex]
+        return self.distbs[distbIndex]()
