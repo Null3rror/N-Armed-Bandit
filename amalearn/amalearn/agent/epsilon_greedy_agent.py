@@ -5,7 +5,7 @@ from utilities import core
 
 
 class EpsilonGreedyAgent(AgentBase):
-    def __init__(self, id, environment, epsilon, stepsize, constant_stepsize=False, q_initial_values=None):
+    def __init__(self, id, environment, epsilon, constant_stepsize=False, stepsize=0, q_initial_values=None):
         super(EpsilonGreedyAgent, self).__init__(id, environment)
         self.epsilon = epsilon
         self.stepsize = stepsize
@@ -17,15 +17,15 @@ class EpsilonGreedyAgent(AgentBase):
     def take_action(self) -> (object, float, bool, object):
         available_actions = self.environment.available_actions()
 
-        print("before count", self.arm_count)
-        print("before q", self.q_values)
+        # print("before count", self.arm_count)
+        # print("before q", self.q_values)
         rand = np.random.random()
         if rand < self.epsilon:
             current_action = np.random.randint(0, available_actions)
-            print("random")
+            # print("random")
         else:
             current_action = core.argmax(self.q_values)
-            print("greedy")
+            # print("greedy")
 
         obs, r, d, i = self.environment.step(current_action)
 
@@ -34,9 +34,9 @@ class EpsilonGreedyAgent(AgentBase):
         q = self.q_values[current_action]
         # print(r, type(r), q, type(q))
         self.q_values[current_action] = q + stepsize * (r - q) 
-        
-        print("after count", self.arm_count)
-        print("after q", self.q_values)
+
+        # print("after count", self.arm_count)
+        # print("after q", self.q_values)
 
         # print(obs, r, d, i)
         self.environment.render()

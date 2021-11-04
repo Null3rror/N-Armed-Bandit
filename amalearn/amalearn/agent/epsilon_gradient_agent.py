@@ -4,7 +4,7 @@ from utilities import core
 
 
 class EpsilonGradientAgent(AgentBase):
-    def __init__(self, id, environment, epsilon, stepsize, constant_stepsize=False):
+    def __init__(self, id, environment, epsilon, constant_stepsize=False, stepsize=0):
         super(EpsilonGradientAgent, self).__init__(id, environment)
         self.epsilon = epsilon
         self.stepsize = stepsize
@@ -17,14 +17,14 @@ class EpsilonGradientAgent(AgentBase):
     def take_action(self) -> (object, float, bool, object):
         available_actions = self.environment.available_actions()
 
-        print("before count", self.arm_count)
-        print("before h", self.h_values)
+        # print("before count", self.arm_count)
+        # print("before h", self.h_values)
         rand = np.random.random()
         if rand < self.epsilon:
             current_action = np.random.randint(0, available_actions)
-            print("random")
+            # print("random")
         else:
-            print("strategy")
+            # print("strategy")
             self.p_values = core.softmax(self.h_values)
             current_action = np.random.choice(available_actions, p=self.p_values)
 
@@ -41,9 +41,9 @@ class EpsilonGradientAgent(AgentBase):
         self.h_values = mask * (self.h_values + stepsize * (r - self.Rbar) * (1 - self.p_values)) + \
                         (1 - mask) * ((self.h_values - stepsize * (r - self.Rbar) * self.p_values)) 
 
-        print("p vals", self.p_values)
-        print("after count", self.arm_count)
-        print("after h", self.h_values)
+        # print("p vals", self.p_values)
+        # print("after count", self.arm_count)
+        # print("after h", self.h_values)
         # print(obs, r, d, i)
         self.environment.render()
         return obs, r, d, i
