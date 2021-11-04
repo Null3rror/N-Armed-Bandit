@@ -3,3 +3,4 @@ from amalearn.agent.random_bandit_agent import RandomBanditAgent
 from amalearn.agent.social_agent import SocialAgent
 from amalearn.agent.epsilon_gradient_agent import EpsilonGradientAgent
 from amalearn.agent.epsilon_greedy_agent import EpsilonGreedyAgent
+from amalearn.agent.epsilon_ucb1_agent import EpsilonUCB1Agent
