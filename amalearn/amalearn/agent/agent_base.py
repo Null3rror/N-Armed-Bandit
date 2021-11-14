@@ -14,3 +14,7 @@ class AgentBase:
         # the environment and observe the results and return them like:
         # return observation, reward, done, info
         pass
+
+    @abstractmethod
+    def reset(self):
+        pass

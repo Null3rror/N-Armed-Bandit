@@ -1,12 +1,12 @@
 import gym
 from amalearn.environment import EnvironmentBase
 
-class MutliArmedBanditEnvironment(EnvironmentBase):
+class RecommenderEnvironment(EnvironmentBase):
     def __init__(self, rewards, episode_max_length, id, container=None):
         state_space = gym.spaces.Discrete(1)
-        action_space = gym.spaces.Discrete(len(rewards))
+        action_space = gym.spaces.Discrete(len(rewards.columns))
 
-        super(MutliArmedBanditEnvironment, self).__init__(action_space, state_space, id, container)
+        super(RecommenderEnvironment, self).__init__(action_space, state_space, id, container)
         self.arms_rewards = rewards
         self.episode_max_length = episode_max_length
         self.state = {
@@ -15,7 +15,7 @@ class MutliArmedBanditEnvironment(EnvironmentBase):
         }
 
     def calculate_reward(self, action):
-        return self.arms_rewards[action].get_reward()
+        return self.arms_rewards[str(action)].sample().values[0]
 
     def terminated(self):
         return self.state['length'] >= self.episode_max_length

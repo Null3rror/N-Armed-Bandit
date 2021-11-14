@@ -9,6 +9,9 @@ class RandomBanditAgent(AgentBase):
         available_actions = self.environment.available_actions()
         action = np.random.choice(available_actions)
         obs, r, d, i = self.environment.step(action)
-        print(obs, r, d, i)
-        self.environment.render()
+        # print(obs, r, d, i)
+        # self.environment.render()
         return obs, r, d, i
+
+    def reset(self):
+        super().reset()
